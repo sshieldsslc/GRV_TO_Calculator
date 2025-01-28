@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Club Financing Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .results {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e9ecef;
+      border-radius: 5px;
+    }
+    .results p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Vacation Club Financing Calculator</h1>
+    <label for="salesPrice">Sales Price ($):</label>
+    <input type="number" id="salesPrice" placeholder="Enter sales price">
+
+    <label for="downPayment">Down Payment Percentage (%):</label>
+    <input type="number" id="downPayment" placeholder="Enter down payment percentage">
+
+    <button onclick="calculateFinancing()">Calculate</button>
+
+    <div class="results" id="results" style="display: none;">
+      <p><strong>Full Down Payment (Rounded):</strong> $<span id="fullDownPayment"></span></p>
+      <p><strong>Loan Amount:</strong> $<span id="loanAmount"></span></p>
+      <p><strong>Monthly Payment:</strong> $<span id="monthlyPayment"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function calculateFinancing() {
+      // Inputs
+      const salesPrice = parseFloat(document.getElementById("salesPrice").value);
+      const downPaymentPercentage = parseFloat(document.getElementById("downPayment").value);
+
+      if (isNaN(salesPrice) || isNaN(downPaymentPercentage) || salesPrice <= 0 || downPaymentPercentage < 0) {
+        alert("Please enter valid inputs for sales price and down payment percentage.");
+        return;
+      }
+
+      // Constants
+      const fee = 355;
+      const annualRate = 17.9; // Fixed APR in percent
+      const months = 48; // Fixed loan term
+
+      // Calculations
+      const netSalesPrice = salesPrice - fee;
+      const netDownPayment = netSalesPrice * (downPaymentPercentage / 100);
+      const preliminaryFullDownPayment = netDownPayment + fee;
+      const fullDownPayment = Math.ceil(preliminaryFullDownPayment / 10) * 10; // Round up to nearest $10
+      const loanAmount = salesPrice - fullDownPayment;
+
+      // Monthly Payment Calculation
+      const monthlyRate = annualRate / 12 / 100; // Convert APR to monthly rate
+      const monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+
+      // Display Results
+      document.getElementById("fullDownPayment").textContent = fullDownPayment.toFixed(2);
+      document.getElementById("loanAmount").textContent = loanAmount.toFixed(2);
+      document.getElementById("monthlyPayment").textContent = monthlyPayment.toFixed(2);
+      document.getElementById("results").style.display = "block";
+    }
+  </script>
+</body>
+</html>
