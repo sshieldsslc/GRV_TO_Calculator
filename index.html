@@ -98,7 +98,7 @@
       const netSalesPrice = salesPrice - fee;
       const netDownPayment = netSalesPrice * (downPaymentPercentage / 100);
       const preliminaryFullDownPayment = netDownPayment + fee;
-      const fullDownPayment = Math.ceil(preliminaryFullDownPayment / 10) * 10; // Round up to nearest $10
+      const fullDownPayment = Math.ceil(preliminaryFullDownPayment / 100) * 100; // Round up to nearest $100
       const loanAmount = salesPrice - fullDownPayment;
 
       // Monthly Payment Calculation
