@@ -1,4 +1,4 @@
-# Vacation Club Financing Calculator
+# GRV Financing Calculator
 
 This is a simple web-based calculator that helps compute the full down payment, loan amount, and monthly payment for financing a vacation club membership. The calculations are based on user inputs and a fixed interest rate and loan term.
 
